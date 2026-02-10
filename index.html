@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STransportation - Truck & Trailer Sales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #E8F1F8;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #7BADD7;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px; /* Adjust this based on your logo's dimensions */
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info div {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 8px;
+            color: #0054AA;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #0677BA;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            padding-left: 300px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-right: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #E8F1F8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,84,170,0.8), rgba(6,119,186,0.02)), url('https://i.postimg.cc/T13QV0m2/hero.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            height: 780px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            padding: 200px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .btn-primary {
+            background-color: #0677BA;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .btn-primary:hover {
+            background-color: #0054AA;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,84,170,0.3);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background-color: #E8F1F8;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .category-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 600;
+        }
+
+        .category-content p {
+            color: #555;
+            margin-bottom: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .category-btn {
+            color: #0677BA;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .category-btn:hover {
+            color: #0054AA;
+        }
+
+        .category-btn i {
+            margin-left: 5px;
+        }
+
+        /* Wholesale Section */
+        .wholesale {
+            background-color: #0054AA;
+            color: white;
+            padding: 60px 0;
+        }
+
+        .wholesale-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .wholesale-content {
+            flex: 1;
+        }
+
+        .wholesale-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .wholesale-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .wholesale-img {
+            flex: 1;
+            margin-left: 40px;
+        }
+
+        .wholesale-img img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        /* Equipment Section */
+        .equipment {
+            padding: 60px 0;
+            background-color: #CADEEF;
+        }
+
+        .equipment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .equipment-img {
+            flex: 1;
+            margin-right: 40px;
+        }
+
+        .equipment-img img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .equipment-content {
+            flex: 1;
+        }
+
+        .equipment-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .equipment-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Articles Section */
+        .articles {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .article-card {
+            border: 1px solid #CADEEF;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+            background-color: #E8F1F8;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 5px 15px rgba(0,84,170,0.1);
+        }
+
+        .article-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .article-content {
+            padding: 20px;
+        }
+
+        .article-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 600;
+        }
+
+        .article-content p {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .article-date {
+            color: #888;
+            font-size: 0.9rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .read-more {
+            color: #0677BA;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .read-more:hover {
+            color: #0054AA;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #7BADD7;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 600;
+        }
+
+        .footer-column p, .footer-column ul {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #0054AA;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .footer-column ul li a:hover {
+            color: #0677BA;
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            color: #0054AA;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #0677BA;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,84,170,0.2);
+            color: #0054AA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .copyright a {
+            color: #0054AA;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                margin-top: 15px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .wholesale-container, .equipment-container {
+                flex-direction: column;
+            }
+
+            .wholesale-img, .equipment-img {
+                margin: 20px 0 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <!-- Replace the src attribute with your logo file path -->
+                <img src="https://i.postimg.cc/W1vTsJPp/New-Rock-Logo.png" alt="STransportation Logo">
+                <!-- You can also remove the h1 tag if your logo includes the company name -->
+            </div>
+            <div class="contact-info">
+                <div>
+                    <i class="fas fa-phone"></i>
+                    <span>1-800-TRUCKS</span>
+                </div>
+                <div>
+                    <i class="fas fa-envelope"></i>
+                    <span>info@stransportation.com</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#financing">Financing</a></li>
+                <li><a href="#wholesale">Wholesale</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h2>Buy Like A Fleet – Save Thousands</h2>
+            <p>Premium trucks and trailers at unbeatable wholesale prices</p>
+            <button class="btn-primary">View Our Inventory</button>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="inventory">
+        <div class="section-container">
+            <h2 class="section-title">Our Truck & Trailer Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://i.postimg.cc/fT3p1W3F/Reefer-Trailers.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Reefer Trailers</h3>
+                        <p>Temperature-controlled trailers for your perishable goods transportation needs.</p>
+                        <a href="#" class="category-btn">View Inventory <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://i.postimg.cc/02QKsFP2/Sleepers-truck.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Sleepers</h3>
+                        <p>Long-haul trucks with comfortable sleeping compartments for extended journeys.</p>
+                        <a href="#" class="category-btn">View Inventory <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://i.postimg.cc/HWJjv52r/Dry-Vans.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Dry Vans</h3>
+                        <p>Versatile dry van trailers perfect for general freight transportation.</p>
+                        <a href="#" class="category-btn">View Inventory <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('https://i.postimg.cc/dVNzf7nY/Cranes.jpg');"></div>
+                    <div class="category-content">
+                        <h3>Cranes</h3>
+                        <p>Heavy-duty crane trucks for construction and heavy lifting operations.</p>
+                        <a href="#" class="category-btn">View Inventory <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wholesale Section -->
+    <section class="wholesale" id="wholesale">
+        <div class="wholesale-container">
+            <div class="wholesale-content">
+                <h2>Wholesale Truck & Trailer Sales</h2>
+                <p>Join our wholesale program and gain access to exclusive pricing on our extensive inventory of trucks and trailers. Whether you're expanding your fleet or replacing older equipment, our wholesale options provide significant savings without compromising on quality.</p>
+                <button class="btn-primary">Learn About Wholesale</button>
+            </div>
+            <div class="wholesale-img">
+                <img src="https://i.postimg.cc/6pFMRCYy/Truck-Trailer.jpg" alt="Wholesale Truck Sales">
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment Section -->
+    <section class="equipment">
+        <div class="equipment-container">
+            <div class="equipment-img">
+                <img src="https://i.postimg.cc/4dHP3yzQ/hero-truck-qih-E73-2.jpg" alt="Truck Equipment">
+            </div>
+            <div class="equipment-content">
+                <h2>Have More Equipment Than You Need?</h2>
+                <p>STransportation buys used trucks and trailers at competitive prices. If you have surplus equipment taking up space on your lot, turn it into cash. Our team of experts will evaluate your vehicles and make a fair offer, helping you free up capital and space for new investments.</p>
+                <button class="btn-primary">Sell Your Equipment</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section class="articles">
+        <div class="section-container">
+            <h2 class="section-title">Trucking Industry Insights</h2>
+            <div class="articles-grid">
+                <article class="article-card">
+                    <div class="article-img" style="background-image: url('https://i.postimg.cc/1zrPjRgj/Maintaining-Truck.jpg');"></div>
+                    <div class="article-content">
+                        <h3>5 Tips for Maintaining Your Truck Fleet</h3>
+                        <p>Discover essential maintenance practices that will extend the life of your trucks and minimize downtime.</p>
+                        <div class="article-date">June 15, 2023</div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-img" style="background-image: url('https://i.postimg.cc/02ktYkxJ/Trailer-Business.jpg');"></div>
+                    <div class="article-content">
+                        <h3>Choosing the Right Trailer for Your Business</h3>
+                        <p>Learn about different trailer types and find the perfect match for your transportation needs.</p>
+                        <div class="article-date">June 10, 2023</div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="article-card">
+                    <div class="article-img" style="background-image: url('https://i.postimg.cc/W343mq9k/Truck-Purchase.jpg');"></div>
+                    <div class="article-content">
+                        <h3>Financing Options for Your Truck Purchase</h3>
+                        <p>Explore different financing solutions available for truck and trailer purchases to make informed decisions.</p>
+                        <div class="article-date">June 5, 2023</div>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>About STransportation</h3>
+                <p>Your trusted partner for quality trucks and trailers. With over 20 years in the industry, we provide reliable transportation solutions at competitive prices.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Inventory</a></li>
+                    <li><a href="#">Financing</a></li>
+                    <li><a href="#">Trade-In</a></li>
+                    <li><a href="#">Parts & Service</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Transportation Way, Truck City, TC 12345</p>
+                <p><i class="fas fa-phone"></i> 1-800-TRUCKS</p>
+                <p><i class="fas fa-envelope"></i> info@stransportation.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 6:00 PM, Sat: 9:00 AM - 4:00 PM</p>
+            </div>
+            <div class="footer-column">
+                <h3>Newsletter</h3>
+                <p>Subscribe to receive updates on new inventory and special offers.</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #CADEEF; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+                    <button type="submit" class="btn-primary" style="width: 100%;">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 STransportation. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            if (email) {
+                // Create a success message
+                const successMessage = document.createElement('div');
+                successMessage.textContent = 'Thank you for subscribing!';
+                successMessage.style.color = '#0054AA';
+                successMessage.style.marginTop = '10px';
+                successMessage.style.fontWeight = 'bold';
+                successMessage.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+                
+                // Clear the form and show the message
+                this.innerHTML = '';
+                this.appendChild(successMessage);
+                
+                // Reset the form after 3 seconds
+                setTimeout(() => {
+                    this.innerHTML = `
+                        <input type="email" placeholder="Your email" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #CADEEF; border-radius: 4px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+                        <button type="submit" class="btn-primary" style="width: 100%;">Subscribe</button>
+                    `;
+                }, 3000);
+            }
+        });
+
+        // Button click handlers
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                // Create a temporary notification
+                const notification = document.createElement('div');
+                notification.textContent = 'Thank you for your interest! We will contact you soon.';
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = '#0677BA';
+                notification.style.color = 'white';
+                notification.style.padding = '15px 20px';
+                notification.style.borderRadius = '5px';
+                notification.style.boxShadow = '0 4px 10px rgba(0,84,170,0.2)';
+                notification.style.zIndex = '1000';
+                notification.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+                
+                document.body.appendChild(notification);
+                
+                // Remove the notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'opacity 0.5s';
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
